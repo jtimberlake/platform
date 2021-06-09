@@ -61,9 +61,9 @@ public class HttpServerConfig
       The OS can truncate the accept queue size to the platform defaults.
       E.g. for linux, the effective server listen backlog queue size cannot be set greater
       than /proc/sys/net/core/somaxconn on the system.
-      If you feel the need to increase httpAcceptQueueSize, increase the OS limit first.
+      If you feel the need to increase httpAcceptQueueSize, you might need to increase the OS limit first.
     */
-    private int httpAcceptQueueSize = 128;
+    private int httpAcceptQueueSize = 10;
 
     private boolean httpsEnabled = false;
     private int httpsPort = 8443;
@@ -580,7 +580,20 @@ public class HttpServerConfig
 
     public enum LogFormat
     {
-        TSV,
-        JSON,
+        TSV(DelimitedRequestLog::new),
+        JSON(JsonRequestLog::new),
+        JSON_VERBOSE(JsonVerboseRequestLog::new);
+
+        private interface LogFactory {
+            RequestLog create(HttpServerConfig config);
+        }
+        private final LogFactory factory;
+        LogFormat(LogFactory factory) {
+            this.factory = factory;
+        }
+
+        RequestLog createLog(HttpServerConfig config) {
+            return factory.create(config);
+        }
     }
 }

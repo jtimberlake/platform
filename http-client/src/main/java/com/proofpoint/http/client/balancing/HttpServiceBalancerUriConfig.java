@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Proofpoint, Inc.
+ * Copyright 2021 Proofpoint, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.proofpoint.discovery.client.balancing;
+package com.proofpoint.http.client.balancing;
 
 import com.google.common.collect.ForwardingMultiset;
 import com.google.common.collect.ImmutableMultiset;
@@ -21,38 +21,38 @@ import com.google.common.collect.Multiset;
 import com.proofpoint.configuration.Config;
 import com.proofpoint.configuration.ConfigDescription;
 
-import javax.annotation.Nullable;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collection;
 
 import static com.google.common.collect.ImmutableMultiset.toImmutableMultiset;
 
-public class StaticHttpServiceConfig
+public class HttpServiceBalancerUriConfig
 {
     private UriMultiset uris;
 
-    @Nullable
-    @Size(min = 1)
-    public UriMultiset getUris()
-    {
-        return uris;
-    }
-
     @Config("uri")
-    @ConfigDescription("Set of URIs for the service. Default is to use Discovery service.")
-    public StaticHttpServiceConfig setUris(UriMultiset uris)
+    @ConfigDescription("Set of URIs for the service")
+    public HttpServiceBalancerUriConfig setUris(UriMultiset uris)
     {
         this.uris = uris;
         return this;
+    }
+
+    @NotNull
+    @NotEmpty
+    public Collection<URI> getUris()
+    {
+        return uris;
     }
 
     public static final class UriMultiset extends ForwardingMultiset<URI>
     {
         private final Multiset<URI> delegate;
 
-        private UriMultiset(Collection<URI> delegate)
+        private UriMultiset(Multiset<URI> delegate)
         {
             this.delegate = ImmutableMultiset.copyOf(delegate);
         }

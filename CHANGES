@@ -1,3 +1,179 @@
+Platform 2.51
+
+* Discovery and Balancing HTTPClient
+
+  DiscoveryModule now permits statically configuring the set of URIs for a
+  service by setting the "service-balancer.SERVICENAME.uri" configuration
+  option to a comma-separated list of URIs.
+
+  StaticDiscoveryModule now requires the "service-balancer.SERVICENAME.uri"
+  configuration option for each discovered service to have at least one URI.
+
+  HttpClientBinder now includes additional bindBalancingHttpClient() methods
+  which use URIs provided in configuration.
+
+Platform 2.49
+
+* Library Upgrades
+
+  - Base Docker image to c15-java11:2.29 (was 2.24)
+
+* Maven plugin upgrades
+  - modernizer-maven-plugin to 2.2.0 (was 1.8.0)
+
+Platform 2.48
+
+* Library Upgrades
+
+  - Jetty to 9.4.40 (was 9.4.38) (CVE-2021-28163, CVE-2021-28164, CVE-2021-28165)
+
+* Maven
+
+  We fixed the specification for the JaCoCo agent in the dependencyManagment section.
+
+Platform 2.47
+
+* Jetty
+
+  - We reverted Jetty to 9.4.38 due to a bug that causes TLS connection failures.
+
+* Maven
+
+  We now specify a version for the JaCoCo agent in the dependencyManagment section.
+
+* Maven plugin upgrades
+
+  - build-helper-maven-plugin to 3.2.0 (was 3.1.0)
+  - maven-resources-plugin to 3.2.0 (was 3.1.0)
+  - maven-assembly-plugin to 3.3.0 (was 3.2.0)
+  - duplicate-finder-maven-plugin to 1.5.0 (was 1.4.0)
+  - spotbugs-maven-plugin to 4.2.2 (was 4.0.0)
+  - maven-site-plugin to 3.9.1 (was 3.9.0)
+  - docker-maven-plugin to 0.35.0 (was 0.33.0)
+
+* Library Changes
+
+  - guice-multibindings has been removed as it is no longer a standalone library.
+
+Platform 2.46
+
+* Library Upgrades
+
+  - Jetty to 9.4.39 (was 9.4.38) (CVE-2021-28163, CVE-2021-28164, CVE-2021-28165)
+  - Base Docker image to c15-java11:2.24 (was 2.22)
+
+Platform 2.44
+
+* Library Upgrades
+
+  - slf4j to 1.7.30 (was 1.7.26)
+  - Joda-Time to 2.10.10 (was 2.10.1)
+  - Jackson to 2.12.2 (was 2.11.0)
+  - hibernate-validator to 6.0.21.Final (was 6.0.18.Final)
+  - assertj-core to 3.19.0 (was 3.12.2)
+  - assertj-guava to 3.4.0 (was 3.2.1)
+  - assertj-db to 2.0.2 (was 1.2.0)
+  - Objenesis to 3.1 (was 3.0.1)
+  - Mockito to 3.8.0 (was 2.28.2)
+  - Hamcrest to 2.2 (was 1.3)
+  - byte-buddy to 1.10.22 (was 1.9.13)
+
+Platform 2.43
+
+* Library Upgrades
+
+  - auto-value to 1.7.4 (was 1.6.5)
+  - Guava to 30.1 (was 30.0)
+  - Guice to 5.0.1 (was 4.2.3)
+  - Jetty to 9.4.38 (was 9.4.35)
+  - Base Docker image to c15-java11:2.22 (was 2.21)
+
+Platform 2.42
+
+* Deprecation removals
+
+  We have removed the empty OpenApiModule. Its functionality has long since
+  been incorporated into JaxrsModule and references to it should be deleted.
+
+  We removed the following deprecated APIs:
+
+  - Logging.logToFile(String, int, DataSize, DataSize)
+  - Logging.addShutdownHookToWaitFor(Thread)
+  - Logging.removeShutdownHookToWaitFor(Thread)
+  - RollingFileHander(String, int, DataSize, DataSize) constructor
+  - ShutdownWaitingLogManager.addWaitForShutdownHook(Thread)
+  - ShutdownWaitingLogManager.removeWaitForShutdownHook(Thread)
+  - log.max-size-in-bytes configuration option
+
+* Library Upgrades
+  - Base Docker image to c15-java11:2.21 (was 2.17)
+
+Platform 2.41
+
+* HttpServer
+
+  We changed the format of the JSON request log to take less space and omit
+  less-used fields. The previous format may be selected by setting the
+  "http-server.log.format" config option to "JSON_VERBOSE".
+
+Platform 2.40
+
+* We fixed an issue in the JMX module when running on a version of Java with
+  a four-segment version number.
+
+* We no longer replace a previous set of discovered instances when the
+  discovery service returns an empty set of instances.
+
+* Library Upgrades
+  - Base Docker image to c15-java11:2.17 (was 2.13)
+
+Platform 2.39
+
+* Library Upgrades
+
+  - Jetty to 9.4.35 (was 9.4.33)
+  - Guava to 30.0 (was 29.0)
+  - Base Docker image to repocache.nonprod.ppops.net/dev-docker-local/c15-java11:2.13
+    Base image needs to have the "service" user and /service/var directory.
+
+* Packaging
+
+  We now exclude test-scope jar files from distribution tar files and
+  Docker images.
+
+Platform 2.38
+
+* Library Upgrades
+  - Jetty to 9.4.33 (was 9.4.32) (fixes CVE-2020-27216)
+  - Base Docker image to proofpoint/platform-zulu-11:1.11
+    based on 11.0.9. Pull image through repocache docker-remote.
+
+Platform 2.37
+
+* HTTP Server
+
+  We now delay creating the listen sockets until the @AcceptRequests phase.
+
+  We reduced the default accept queue size to 10 from 128 in order to shed
+  load during connection storms.
+
+* Library Upgrades
+  - Jetty to 9.4.32 (was 9.4.24)
+  - Base Docker image to proofpoint/platform-zulu-11:1.10
+    update libx11-6 and libx11-data to 2:1.6.7-1+deb10u1 for CVE-2020-14363
+
+Platform 2.36
+
+* Library Upgrades
+  - Base Docker image to proofpoint/platform-zulu-11:1.9
+    based on 11.0.8
+
+Platform 2.35
+
+* Library Upgrades
+  - Base Docker image to proofpoint/platform-zulu-11:1.8
+    update libsystemd0 to 241-7~deb10u4 for CVE-2020-1712
+
 Platform 2.34
 
 * Build
@@ -15,7 +191,7 @@ Platform 2.32
 
 * Library Upgrades
   - Base Docker image to proofpoint/platform-zulu-11:1.7
-    updates libgnutls30 to 3.6.7-4+deb10u4 for CVE-2020-13777
+    updates libgnutls30 to 3.6.7-4+deb10u4 for CVE-2020-13777
 
 Platform 2.30
 
@@ -44,7 +220,7 @@ Platform 2.28
 * Library Upgrades
 
   - Base Docker image to proofpoint/platform-zulu-11:1.6
-     based on azul/zulu-openjdk-debian:11.0.7-11.39.15
+     based on azul/zulu-openjdk-debian:11.0.7-11.39.15
     (was proofpoint/platform-zulu-11:1.5)
 
 Platform 2.27
@@ -130,7 +306,7 @@ Platform 2.24
 * Library Upgrades
 
   - Base Docker image to proofpoint/platform-zulu-11:1.5
-    based on 11.0.6 (was proofpoint/platform-zulu-11:1.4)
+    based on 11.0.6 (was proofpoint/platform-zulu-11:1.4)
 
 * Maven plugin upgrades
 
@@ -209,7 +385,7 @@ Platform 2.18
 * Library Upgrades
 
   - Base Docker image to proofpoint/platform-zulu-11:1.4
-    based on 11.0.5 (was proofpoint/platform-zulu-11:1.3)
+    based on 11.0.5 (was proofpoint/platform-zulu-11:1.3)
 
 Platform 2.17
 
@@ -299,7 +475,7 @@ Platform 2.08
 
   - jackson-databind to 2.9.9.1 (was 2.9.9) (CVE-2019-12384 CVE-2019-12814)
   - Base Docker image to proofpoint/platform-zulu-11:1.3
-    based on 11.0.4 (was proofpoint/platform-zulu-8:1.2)
+    based on 11.0.4 (was proofpoint/platform-zulu-8:1.2)
 
 Platform 2.07
 
@@ -387,7 +563,7 @@ Platform 2.04
 
   - Jetty to 9.4.17 (was 9.4.15) (CVE-2019-10241, -10246, -10247)
   - Base Docker image to proofpoint/platform-zulu-8:1.2
-    based on 8u212 (was proofpoint/platform-zulu-8:1.1)
+    based on 8u212 (was proofpoint/platform-zulu-8:1.1)
 
 Platform 2.03
 
@@ -405,7 +581,7 @@ Platform 2.02
 
   - Guava to 27.1-jre (was 27.0.1-jre)
   - Base Docker image to proofpoint/platform-zulu-8:1.1
-    based on 8u202 (was proofpoint/platform-zulu-8:1.0)
+    based on 8u202 (was proofpoint/platform-zulu-8:1.0)
 
 Platform 2.01
 
@@ -414,7 +590,7 @@ Platform 2.01
 * Library upgrades
 
   - Base Docker image to proofpoint/platform-zulu-8:1.0
-    (was azul/zulu-openjdk-debian:8u192)
+    (was azul/zulu-openjdk-debian:8u192)
   
     Uses "dumb-init" to better handle pid 1 responsibilites   
 
